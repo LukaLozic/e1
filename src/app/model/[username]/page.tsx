@@ -24,10 +24,11 @@ export async function generateMetadata({ params }: Props) {
 // Main page component
 export default async function ModelPage({ params }: Props) {
   const models = await fetchModels();
-  const model = models.find((m) => m.username === params.username) || null;
+  const model = models.find((m) => m.username === params.username);
 
   if (!model) {
     notFound();
+    return null; // This ensures TypeScript knows the function ends here
   }
 
   return (
