@@ -11,4 +11,7 @@ const compat = new FlatCompat({
 
 export default [
   ...compat.extends("next/core-web-vitals"),
+  {
+    ignores: ['.next/**'], // Ignore the .next directory
+  },
 ];
