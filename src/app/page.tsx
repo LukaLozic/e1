@@ -285,7 +285,7 @@
                           )}
                         </div>
                       </div>
-<div className="border-t border-zinc-700 my-2"></div>
+                      <div className="border-t border-zinc-700 my-2"></div>
 
                       <p className="text-xs text-zinc-400 line-clamp-2 leading-snug">{model.room_subject}</p>
                     </div>
@@ -350,57 +350,60 @@
               </div>
 
               {/* Pagination controls */}
-              {totalPages > 1 && (
-                <div className="flex flex-wrap justify-center items-center space-x-3 space-y-2 text-white select-none">
-                  <button
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className={`px-3 py-1 rounded border border-pink-500 hover:bg-pink-600 disabled:opacity-40 disabled:cursor-not-allowed`}
-                  >
-                    Forrige
-                  </button>
+                {totalPages > 1 && (
+                  <div className="mt-8 pt-4 border-t border-pink-300">
+                    <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 text-white select-none px-4 py-2">
+                      <button
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="px-3 py-1 rounded border border-pink-500 hover:bg-pink-600 disabled:opacity-40 disabled:cursor-not-allowed"
+                      >
+                        Forrige
+                      </button>
 
-                  {[...Array(totalPages)].map((_, i) => {
-                    const page = i + 1;
-                    if (
-                      page === 1 ||
-                      page === totalPages ||
-                      (page >= currentPage - 2 && page <= currentPage + 2)
-                    ) {
-                      return (
-                        <button
-                          key={page}
-                          onClick={() => handlePageChange(page)}
-                          className={`px-3 py-1 rounded border border-pink-500 ${
-                            currentPage === page ? "bg-pink-600 font-bold" : "hover:bg-pink-600"
-                          }`}
-                        >
-                          {page}
-                        </button>
-                      );
-                    }
-                    if (
-                      (page === currentPage - 3 && page > 1) ||
-                      (page === currentPage + 3 && page < totalPages)
-                    ) {
-                      return (
-                        <span key={page} className="px-2 py-1">
-                          ...
-                        </span>
-                      );
-                    }
-                    return null;
-                  })}
+                      {[...Array(totalPages)].map((_, i) => {
+                        const page = i + 1;
+                        if (
+                          page === 1 ||
+                          page === totalPages ||
+                          (page >= currentPage - 2 && page <= currentPage + 2)
+                        ) {
+                          return (
+                            <button
+                              key={page}
+                              onClick={() => handlePageChange(page)}
+                              className={`px-3 py-1 rounded border border-pink-500 ${
+                                currentPage === page ? "bg-pink-600 font-bold" : "hover:bg-pink-600"
+                              }`}
+                            >
+                              {page}
+                            </button>
+                          );
+                        }
+                        if (
+                          (page === currentPage - 3 && page > 1) ||
+                          (page === currentPage + 3 && page < totalPages)
+                        ) {
+                          return (
+                            <span key={page} className="px-2 py-1">
+                              ...
+                            </span>
+                          );
+                        }
+                        return null;
+                      })}
 
-                  <button
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className={`px-3 py-1 rounded border border-pink-500 hover:bg-pink-600 disabled:opacity-40 disabled:cursor-not-allowed`}
-                  >
-                    Næste
-                  </button>
-                </div>
-              )}
+                      <button
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className="px-3 py-1 rounded border border-pink-500 hover:bg-pink-600 disabled:opacity-40 disabled:cursor-not-allowed"
+                      >
+                        Næste
+                      </button>
+                    </div>
+                  </div>
+                )}
+
             </>
           )}
         </main>
