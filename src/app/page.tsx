@@ -2,6 +2,9 @@
 
   import { useEffect, useState } from "react";
   import { Model } from "@/types/model";
+  import { chaturbateCountries } from '@/utils/countries';
+  import CountryDropdown from "@/components/CountryDropdown";
+
 
   export default function HomePage() {
     const [models, setModels] = useState<Model[]>([]);
@@ -170,21 +173,18 @@
         {/* Header */}
         <header className="bg-zinc-950 shadow-md sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
-            <h1 className="text-3xl font-bold tracking-wide text-pink-500">ErosLive</h1>
+            <h1 className="text-3xl font-bold tracking-wide text-pink-500">KneppeMe</h1>
 
             <div className="flex flex-wrap gap-4 items-center">
-              <select
-                className="bg-zinc-800 text-white px-3 py-1 rounded"
-                value={selectedCountry}
-                onChange={(e) => setSelectedCountry(e.target.value)}
-              >
-                <option value="">Alle lande</option>
-                {uniqueCountries.map((country) => (
-                  <option key={country} value={country}>
-                    {country} ({countryCounts[country]})
-                  </option>
-                ))}
-              </select>
+              <CountryDropdown
+                countries={chaturbateCountries}
+                selectedCountry={selectedCountry}
+                onChange={setSelectedCountry}
+                countryCounts={countryCounts}
+              />
+
+
+
 
               <select
                 className="bg-zinc-800 text-white px-3 py-1 rounded"
@@ -410,7 +410,7 @@
         </main>
 
         <footer className="text-center p-5 text-xs text-zinc-500">
-          &copy; 2025 ErosLive. Alle rettigheder forbeholdes.
+          &copy; 2025 KneppeMe. Alle rettigheder forbeholdes.
         </footer>
       </div>
     );
