@@ -4,6 +4,8 @@
   import { Model } from "@/types/model";
   import { chaturbateCountries } from '@/utils/countries';
   import CountryDropdown from "@/components/CountryDropdown";
+  import AdBlockNotice from "@/components/AdBlockNotice"; // adjust the path as needed
+
 
 
   export default function HomePage() {
@@ -13,27 +15,11 @@
     const [minAge, setMinAge] = useState(18);
     const [maxAge, setMaxAge] = useState(100);
     const [isExpanded, setIsExpanded] = useState(false);
-    const [adBlockDetected, setAdBlockDetected] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const modelsPerPage = 20; // number of models per page
 
     useEffect(() => {
-      // AdBlock detection by trying to load an ad URL or bait element
-      const adTest = document.createElement("div");
-      adTest.className = "adsbox";
-      adTest.style.position = "absolute";
-      adTest.style.height = "1px";
-      adTest.style.width = "1px";
-      adTest.style.top = "-1000px";
-      document.body.appendChild(adTest);
-
-      window.setTimeout(() => {
-        if (adTest.offsetHeight === 0) {
-          setAdBlockDetected(true);
-        }
-        document.body.removeChild(adTest);
-      }, 100);
-
+   
       // Fetch models
       const loadModels = async () => {
         let offset = 0;
@@ -162,13 +148,7 @@
     return (
       <div className="min-h-screen flex flex-col bg-zinc-900 text-white">
         {/* AdBlock Warning */}
-        {adBlockDetected && (
-          <div className="bg-red-700 text-white text-center py-3 px-4">
-            <p>
-              Vi har opdaget, at du bruger en annonceblokering. For at siden fungerer korrekt, bedes du deaktivere din annonceblokering i Chrome-udvidelser.
-            </p>
-          </div>
-        )}
+        <AdBlockNotice />
 
         {/* Header */}
         <header className="bg-zinc-950 shadow-md sticky top-0 z-50">
