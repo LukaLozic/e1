@@ -148,7 +148,6 @@
     return (
       <div className="min-h-screen flex flex-col bg-zinc-900 text-white">
         {/* AdBlock Warning */}
-        <AdBlockNotice />
 
         {/* Header */}
         <header className="bg-zinc-950 shadow-md sticky top-0 z-50">
@@ -228,6 +227,8 @@
 
         {/* Main content */}
         <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-10">
+          <AdBlockNotice />
+
           {filteredModels.length === 0 ? (
             <p className="text-center text-gray-400">Ingen modeller fundet.</p>
           ) : (
