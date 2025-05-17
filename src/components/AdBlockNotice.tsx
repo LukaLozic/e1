@@ -5,7 +5,7 @@ export default function AdBlockNotice() {
 
   useEffect(() => {
     // Try to fetch Chaturbate favicon (small, fast, and harmless)
-    fetch("https://chaturbate.com/favicon.ico", { method: "HEAD", mode: "no-cors" })
+    fetch("https://chaturbate.com/in/?", { method: "HEAD", mode: "no-cors" })
       .then(() => {
         // If the request succeeds, do nothing
       })
