@@ -1,31 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-const AdBlockNotice = () => {
-  const [adBlockDetected, setAdBlockDetected] = useState(false);
+export default function AdBlockNotice() {
+  const [chaturbateBlocked, setChaturbateBlocked] = useState(false);
 
   useEffect(() => {
-    const bait = document.createElement('div');
-    bait.className = 'adsbox'; // class name targeted by AdBlock
-    Object.assign(bait.style, {
-      width: '1px',
-      height: '1px',
-      position: 'absolute',
-      left: '-9999px',
-      top: '-9999px',
-      display: 'block',
-    });
-
-    document.body.appendChild(bait);
-
-    setTimeout(() => {
-      if (!bait.offsetParent || bait.offsetHeight === 0 || bait.offsetWidth === 0) {
-        setAdBlockDetected(true); // AdBlock likely active
-      }
-      document.body.removeChild(bait);
-    }, 100);
+    // Try to fetch Chaturbate favicon (small, fast, and harmless)
+    fetch("https://chaturbate.com/favicon.ico", { method: "HEAD", mode: "no-cors" })
+      .then(() => {
+        // If the request succeeds, do nothing
+      })
+      .catch(() => {
+        // If the fetch fails due to adblocker/network error
+        setChaturbateBlocked(true);
+      });
   }, []);
 
-  if (!adBlockDetected) return null;
+  if (!chaturbateBlocked) return null;
 
   return (
     <div style={{
@@ -43,4 +33,3 @@ const AdBlockNotice = () => {
   );
 };
 
-export default AdBlockNotice;
