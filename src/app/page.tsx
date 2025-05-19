@@ -237,7 +237,7 @@
                 {currentModels.map((model) => (
                   <a
                     key={model.username}
-                    href={model.chat_room_url}
+                    href={`/api/redirect?to=${encodeURIComponent(model.chat_room_url)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="relative bg-zinc-800 rounded-xl overflow-hidden shadow-md hover:shadow-lg hover:scale-[1.02] transition"
