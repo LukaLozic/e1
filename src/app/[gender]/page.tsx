@@ -1,5 +1,7 @@
 import HomePage from "../HomePage";
 
-export default async function GenderPage({ params }: { params: { gender: string } }) {
+type Props = { params: { gender: string } };
+
+export default function GenderPage({ params }: Props) {
   return <HomePage genderParam={params.gender} />;
 }

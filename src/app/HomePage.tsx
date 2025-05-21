@@ -44,25 +44,34 @@ export default function HomePage({ genderParam = "" }: { genderParam?: string })
     }, []);
 
 
-    useEffect(() => {
-      const pathGender = path?.split("/")[1]?.toLowerCase();
+useEffect(() => {
+  if (!genderParam) {
+    setSelectedGender("All");
+    return;
+  }
 
-      const genderMapFromPath: { [key: string]: string } = {
-        kvinder: "Female",
-        maend: "Male",
-        par: "Couple",
-        trans: "Trans",
-        all: "All",
-      };
+  // Decode the URI component so special characters like 'æ' are interpreted correctly
+  const decodedParam = decodeURIComponent(genderParam.toLowerCase());
 
-      const genderFromPath = genderMapFromPath[pathGender];
+  const genderMapFromParam: { [key: string]: string } = {
+    "nogne-mænd": "Male",
+    "nogne-damer": "Female",
+    par: "Couple",
+    trans: "Trans",
+    "": "All",
+  };
 
-      if (genderFromPath) {
-        setSelectedGender(genderFromPath);
-      } else {
-        setSelectedGender("All"); // fallback
-      }
-    }, [path]); // 👈 include path as dependency
+  const genderFromParam = genderMapFromParam[decodedParam];
+
+  if (genderFromParam) {
+    setSelectedGender(genderFromParam);
+  } else {
+    setSelectedGender("All"); // fallback
+  }
+}, [genderParam]);
+
+
+
 
 
 
@@ -205,8 +214,8 @@ export default function HomePage({ genderParam = "" }: { genderParam?: string })
                   onClick={() => {
                     const genderPathMap: { [key: string]: string } = {
                       All: "",
-                      Female: "kvinder",
-                      Male: "maend",
+                      Female: "nogne-damer",
+                      Male: "nogne-mænd",
                       Couple: "par",
                       Trans: "trans",
                     };
