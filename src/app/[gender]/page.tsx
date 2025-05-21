@@ -1,7 +1,8 @@
 import HomePage from "../HomePage";
 
-type Props = { params: { gender: string } };
-
-export default function GenderPage({ params }: Props) {
+// This is a Server Component (default in app router)
+// Do NOT add "use client" here.
+// Typing params explicitly is fine.
+export default function GenderPage({ params }: { params: { gender: string } }) {
   return <HomePage genderParam={params.gender} />;
 }
