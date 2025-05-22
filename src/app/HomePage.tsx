@@ -6,6 +6,7 @@ import { chaturbateCountries } from '@/utils/countries';
 import CountryDropdown from "@/components/CountryDropdown";
 import AdBlockNotice from "@/components/AdBlockNotice"; // adjust the path as needed>
 import { usePathname, useRouter } from "next/navigation";
+import AgeDropdown from "@/components/AgeDropdown";
 
 
 
@@ -196,17 +197,8 @@ useEffect(() => {
                 onChange={setSelectedCountry}
                 countryCounts={countryCounts}
               />
-              <select
-                className="bg-zinc-800 text-white px-3 py-1 rounded"
-                onChange={(e) => handleAgeChange(e.target.value)}
-                value={`${minAge}-${maxAge}`}
-              >
-                <option value="18-100">Alle aldre</option>
-                <option value="18-25">18–25</option>
-                <option value="26-35">26–35</option>
-                <option value="36-50">36–50</option>
-                <option value="51-100">50+</option>
-              </select>
+              <AgeDropdown minAge={minAge} maxAge={maxAge} onChange={handleAgeChange} />
+
 
               {["All", "Female", "Male", "Couple", "Trans"].map((gender) => (
                 <button
