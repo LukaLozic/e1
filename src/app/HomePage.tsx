@@ -181,6 +181,16 @@ useEffect(() => {
       }
     };
 
+    const resetFilters = () => {
+      setSelectedGender("All");
+      setSelectedCountry("");
+      setMinAge(18);
+      setMaxAge(100);
+      setCurrentPage(1);
+      setIsExpanded(false);
+      router.push("/"); // Always route to the root page
+    };
+
     return (
       <div className="min-h-screen flex flex-col bg-zinc-900 text-white">
         {/* AdBlock Warning */}
@@ -190,7 +200,7 @@ useEffect(() => {
           <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
           <h1
             className="text-3xl font-bold tracking-wide text-pink-500 cursor-pointer"
-            onClick={() => router.push("/")}
+            onClick={resetFilters}
           >
             KneppeMe
           </h1>
