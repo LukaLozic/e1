@@ -35,7 +35,7 @@ export default function AgeDropdown({ minAge, maxAge, onChange }: AgeDropdownPro
     <div className="relative inline-block text-left" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-zinc-800 text-white px-3 py-1 rounded flex items-center gap-2 cursor-pointer"
+        className="bg-zinc-800 text-white px-3 py-2 rounded flex items-center gap-2 cursor-pointer"
         type="button"
       >
         <span>{selected.label}</span>
