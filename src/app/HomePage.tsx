@@ -188,7 +188,12 @@ useEffect(() => {
         {/* Header */}
         <header className="bg-zinc-950 shadow-md sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
-            <h1 className="text-3xl font-bold tracking-wide text-pink-500">KneppeMe</h1>
+          <h1
+            className="text-3xl font-bold tracking-wide text-pink-500 cursor-pointer"
+            onClick={() => router.push("/")}
+          >
+            KneppeMe
+          </h1>
 
             <div className="flex flex-wrap gap-4 items-center">
               <CountryDropdown
