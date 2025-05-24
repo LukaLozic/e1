@@ -229,7 +229,7 @@ export default function HomePage({ genderParam = "" }: { genderParam?: string })
             router.push(`/${genderPathMap[gender]}`);
             setIsExpanded(false);
           }}
-          className={`px-6 py-2 rounded font-semibold transition-all duration-150 ${
+          className={`px-6 py-1 rounded font-semibold transition-all duration-150 ${
             selectedGender === gender
               ? "bg-pink-500 text-white"
               : "bg-zinc-800 text-zinc-300 hover:bg-zinc-700"

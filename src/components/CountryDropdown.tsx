@@ -33,7 +33,7 @@ export default function CountryDropdown({
     <div className="relative inline-block text-left" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-zinc-800 text-white px-3 py-2 rounded flex items-center gap-2"
+        className="bg-zinc-800 text-white px-3 py-1 rounded flex items-center gap-2"
       >
         {selectedCountry && (
           <img
