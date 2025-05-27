@@ -179,6 +179,7 @@ export default function HomePage({ genderParam = "" }: { genderParam?: string })
     };
 
     // Affiliate links
+    
     const broadcasterSignupLink = "https://chaturbate.com/in/?tour=NwNd&campaign=RCJNu&track=default";
     const signupLink = "https://chaturbate.com/in/?tour=3Mc9&campaign=RCJNu&track=default&redirect_to_room=-welcomepage-";
 
