@@ -182,51 +182,51 @@ export default function HomePage({ genderParam = "" }: { genderParam?: string })
     const broadcasterSignupLink = "https://chaturbate.com/in/?tour=NwNd&campaign=RCJNu&track=default";
     const signupLink = "https://chaturbate.com/in/?tour=3Mc9&campaign=RCJNu&track=default&redirect_to_room=-welcomepage-";
 
-return (
-  <div className="min-h-screen flex flex-col bg-zinc-900 text-white">
-    {/* Header */}
-    <header className="bg-zinc-950 shadow-md sticky top-0 z-50">
-      {/* Upper row: brand + search + buttons */}
-<div className="max-w-7xl mx-auto px-6 py-3 flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
-  {/* Top row for mobile, main row for desktop */}
-  <div className="w-full flex flex-row items-center gap-1 md:w-auto md:gap-3">
-    <h1
-      className="text-2xl md:text-3xl font-bold tracking-wide text-pink-500 cursor-pointer flex-shrink-0"
-      onClick={resetFilters}
-      style={{ zIndex: 2 }}
-    >
-      KneppeMe
-    </h1>
-    <div className="flex flex-row gap-1 md:gap-2 ml-auto">
-      <a
-        href={broadcasterSignupLink}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="px-2 py-1 md:px-6 md:py-1 rounded font-semibold text-xs md:text-base bg-zinc-800 text-zinc-300 hover:bg-zinc-700 border border-pink-500 hover:text-white transition-all duration-150"
-        style={{ whiteSpace: "nowrap" }}
-      >
-        Broadcast
-      </a>
-      <a
-        href={signupLink}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="px-2 py-1 md:px-6 md:py-1 rounded font-semibold text-xs md:text-base bg-pink-500 text-white border border-pink-500 hover:bg-pink-600 transition-all duration-150"
-        style={{ whiteSpace: "nowrap" }}
-      >
-        Sign up
-      </a>
+    return (
+      <div className="min-h-screen flex flex-col bg-zinc-900 text-white">
+        {/* Header */}
+        <header className="bg-zinc-950 shadow-md sticky top-0 z-50">
+          {/* Upper row: brand + search + buttons */}
+    <div className="max-w-7xl mx-auto px-6 py-3 flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+      {/* Top row for mobile, main row for desktop */}
+      <div className="w-full flex flex-row items-center gap-1 md:w-auto md:gap-3">
+        <h1
+          className="text-2xl md:text-3xl font-bold tracking-wide text-pink-500 cursor-pointer flex-shrink-0"
+          onClick={resetFilters}
+          style={{ zIndex: 2 }}
+        >
+          KneppeMe
+        </h1>
+        <div className="flex flex-row gap-1 md:gap-2 ml-auto">
+          <a
+            href={broadcasterSignupLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-2 py-1 md:px-6 md:py-1 rounded font-semibold text-xs md:text-base bg-zinc-800 text-zinc-300 hover:bg-zinc-700 border border-pink-500 hover:text-white transition-all duration-150"
+            style={{ whiteSpace: "nowrap" }}
+          >
+            Send selv live
+          </a>
+          <a
+            href={signupLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-2 py-1 md:px-6 md:py-1 rounded font-semibold text-xs md:text-base bg-pink-500 text-white border border-pink-500 hover:bg-pink-600 transition-all duration-150"
+            style={{ whiteSpace: "nowrap" }}
+          >
+            Opret bruger
+          </a>
+        </div>
+      </div>
+      {/* Search bar below on mobile, center row on desktop */}
+      <div className="w-full mt-3 md:mt-0 md:ml-8 md:mr-8 md:flex-1">
+        <SearchBar
+          value={searchQuery}
+          onChange={setSearchQuery}
+          onSubmit={() => setCurrentPage(1)}
+        />
+      </div>
     </div>
-  </div>
-  {/* Search bar below on mobile, center row on desktop */}
-  <div className="w-full mt-3 md:mt-0 md:ml-8 md:mr-8 md:flex-1">
-    <SearchBar
-      value={searchQuery}
-      onChange={setSearchQuery}
-      onSubmit={() => setCurrentPage(1)}
-    />
-  </div>
-</div>
           {/* Sleek divider */}
           <div
             className="w-screen h-px bg-gradient-to-r from-zinc-800/60 via-zinc-700/80 to-zinc-800/60"
