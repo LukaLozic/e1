@@ -20,6 +20,7 @@ export default function HomePage({ genderParam = "" }: { genderParam?: string })
     const [isExpanded, setIsExpanded] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState("");
+    const [selectedTags, setSelectedTags] = useState<string[]>([]); // <-- Array for up to 3 tags
     const modelsPerPage = 20;
 
     useEffect(() => {
@@ -99,12 +100,31 @@ export default function HomePage({ genderParam = "" }: { genderParam?: string })
       "Deltag, chat, og nyd synet af hårde kroppe og varme pikker, der venter på din opmærksomhed.",
     ];
 
-    // Filtering models based on selected filters, including search query
+    // TAGS LOGIC
+    const tagCounts: Record<string, number> = {};
+    models.forEach(model => {
+      if (Array.isArray(model.tags)) {
+        model.tags.forEach(tag => {
+          tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+        });
+      }
+    });
+    const topTags = Object.entries(tagCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 20)
+      .map(([tag]) => tag);
+
+    // Filtering models based on selected filters, including multi-tag AND logic
     const filteredModels = models.filter((model) => {
       if (selectedGender !== "All" && model.gender !== genderMap[selectedGender]) return false;
       if (selectedCountry && model.country !== selectedCountry) return false;
       if (model.age < minAge || model.age > maxAge) return false;
       if (searchQuery && !model.username.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+      if (selectedTags.length > 0) {
+        if (!Array.isArray(model.tags)) return false;
+        // AND: Every selected tag must be present in model.tags
+        if (!selectedTags.every(tag => model.tags.includes(tag))) return false;
+      }
       return true;
     });
 
@@ -120,8 +140,6 @@ export default function HomePage({ genderParam = "" }: { genderParam?: string })
       return acc;
     }, {} as { [country: string]: number });
 
-    const uniqueCountries = Object.keys(countryCounts).sort();
-
     const handleAgeChange = (range: string) => {
       const [min, max] = range.split("-").map(Number);
       setMinAge(min);
@@ -131,7 +149,7 @@ export default function HomePage({ genderParam = "" }: { genderParam?: string })
 
     useEffect(() => {
       setCurrentPage(1);
-    }, [selectedGender, selectedCountry, minAge, maxAge, searchQuery]);
+    }, [selectedGender, selectedCountry, minAge, maxAge, searchQuery, selectedTags]);
 
     const getDescriptionContent = () => {
       if (selectedGender === "Female") {
@@ -175,11 +193,20 @@ export default function HomePage({ genderParam = "" }: { genderParam?: string })
       setCurrentPage(1);
       setIsExpanded(false);
       setSearchQuery("");
+      setSelectedTags([]);
       router.push("/");
     };
 
+    // Tag selection handler for up to 3 tags
+    const handleTagClick = (tag: string) => {
+      if (selectedTags.includes(tag)) {
+        setSelectedTags(selectedTags.filter(t => t !== tag));
+      } else if (selectedTags.length < 3) {
+        setSelectedTags([...selectedTags, tag]);
+      }
+    };
+
     // Affiliate links
-    
     const broadcasterSignupLink = "https://chaturbate.com/in/?tour=NwNd&campaign=RCJNu&track=default";
     const signupLink = "https://chaturbate.com/in/?tour=3Mc9&campaign=RCJNu&track=default&redirect_to_room=-welcomepage-";
 
@@ -188,46 +215,46 @@ export default function HomePage({ genderParam = "" }: { genderParam?: string })
         {/* Header */}
         <header className="bg-zinc-950 shadow-md sticky top-0 z-50">
           {/* Upper row: brand + search + buttons */}
-    <div className="max-w-7xl mx-auto px-6 py-3 flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
-      {/* Top row for mobile, main row for desktop */}
-      <div className="w-full flex flex-row items-center gap-1 md:w-auto md:gap-3">
-        <h1
-          className="text-2xl md:text-3xl font-bold tracking-wide text-pink-500 cursor-pointer flex-shrink-0"
-          onClick={resetFilters}
-          style={{ zIndex: 2 }}
-        >
-          KneppeMe
-        </h1>
-        <div className="flex flex-row gap-1 md:gap-2 ml-auto">
-          <a
-            href={broadcasterSignupLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-2 py-1 md:px-6 md:py-1 rounded font-semibold text-xs md:text-base bg-zinc-800 text-zinc-300 hover:bg-zinc-700 border border-pink-500 hover:text-white transition-all duration-150"
-            style={{ whiteSpace: "nowrap" }}
-          >
-            Send selv live
-          </a>
-          <a
-            href={signupLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-2 py-1 md:px-6 md:py-1 rounded font-semibold text-xs md:text-base bg-pink-500 text-white border border-pink-500 hover:bg-pink-600 transition-all duration-150"
-            style={{ whiteSpace: "nowrap" }}
-          >
-            Opret bruger
-          </a>
-        </div>
-      </div>
-      {/* Search bar below on mobile, center row on desktop */}
-      <div className="w-full mt-3 md:mt-0 md:ml-8 md:mr-8 md:flex-1">
-        <SearchBar
-          value={searchQuery}
-          onChange={setSearchQuery}
-          onSubmit={() => setCurrentPage(1)}
-        />
-      </div>
-    </div>
+          <div className="max-w-7xl mx-auto px-6 py-3 flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+            {/* Top row for mobile, main row for desktop */}
+            <div className="w-full flex flex-row items-center gap-1 md:w-auto md:gap-3">
+              <h1
+                className="text-2xl md:text-3xl font-bold tracking-wide text-pink-500 cursor-pointer flex-shrink-0"
+                onClick={resetFilters}
+                style={{ zIndex: 2 }}
+              >
+                KneppeMe
+              </h1>
+              <div className="flex flex-row gap-1 md:gap-2 ml-auto">
+                <a
+                  href={broadcasterSignupLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-2 py-1 md:px-6 md:py-1 rounded font-semibold text-xs md:text-base bg-zinc-800 text-zinc-300 hover:bg-zinc-700 border border-pink-500 hover:text-white transition-all duration-150"
+                  style={{ whiteSpace: "nowrap" }}
+                >
+                  Send selv live
+                </a>
+                <a
+                  href={signupLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-2 py-1 md:px-6 md:py-1 rounded font-semibold text-xs md:text-base bg-pink-500 text-white border border-pink-500 hover:bg-pink-600 transition-all duration-150"
+                  style={{ whiteSpace: "nowrap" }}
+                >
+                  Opret bruger
+                </a>
+              </div>
+            </div>
+            {/* Search bar below on mobile, center row on desktop */}
+            <div className="w-full mt-3 md:mt-0 md:ml-8 md:mr-8 md:flex-1">
+              <SearchBar
+                value={searchQuery}
+                onChange={setSearchQuery}
+                onSubmit={() => setCurrentPage(1)}
+              />
+            </div>
+          </div>
           {/* Sleek divider */}
           <div
             className="w-screen h-px bg-gradient-to-r from-zinc-800/60 via-zinc-700/80 to-zinc-800/60"
@@ -275,8 +302,54 @@ export default function HomePage({ genderParam = "" }: { genderParam?: string })
                 </button>
               ))}
             </div>
+            <div
+              className="w-screen bg-gradient-to-r from-zinc-800/60 via-zinc-700/80 to-zinc-800/60"
+              style={{
+                marginLeft: "calc(50% - 50vw)",
+                marginRight: "calc(50% - 50vw)",
+                height: "0.5px"
+              }}
+            />
           </div>
         </header>
+        {/* TAG FILTER ROW */}
+        <div className="flex flex-wrap gap-2 items-center justify-center py-2 bg-zinc-900">
+          {topTags.map((tag) => {
+            const selected = selectedTags.includes(tag);
+            const disabled = !selected && selectedTags.length >= 3;
+            return (
+              <button
+                key={tag}
+                onClick={() => handleTagClick(tag)}
+                disabled={disabled}
+                className={`px-3 py-1 rounded-full border transition-all duration-150
+                  ${selected ? "bg-pink-500 text-white border-pink-600"
+                    : disabled ? "bg-zinc-800 text-zinc-400 border-zinc-800 opacity-40 cursor-not-allowed"
+                    : "bg-zinc-800 text-zinc-300 border-zinc-700 hover:bg-pink-600 hover:text-white"}
+                `}
+                style={{ pointerEvents: disabled ? "none" : undefined }}
+              >
+                #{tag}
+              </button>
+            );
+          })}
+          {selectedTags.length > 0 && (
+            <button
+              onClick={() => setSelectedTags([])}
+              className="ml-2 px-3 py-1 rounded-full bg-zinc-700 text-white border border-zinc-500"
+            >
+              Ryd tag filter ✕
+            </button>
+          )}
+        </div>
+        <div
+          className="w-screen bg-gradient-to-r from-zinc-800/60 via-zinc-700/80 to-zinc-800/60"
+          style={{
+            marginLeft: "calc(50% - 50vw)",
+            marginRight: "calc(50% - 50vw)",
+            height: "0.5px"
+          }}
+        />     
         {/* Optional Description Section */}
         {description && (
           <section className="bg-zinc-800 text-white px-6 py-6">
@@ -334,6 +407,17 @@ export default function HomePage({ genderParam = "" }: { genderParam?: string })
                             />
                           )}
                         </div>
+                      </div>
+                      {/* Show tags for each model */}
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        {model.tags?.slice(0, 3).map(tag => (
+                          <span
+                            key={tag}
+                            className="bg-zinc-700 text-xs px-2 py-0.5 rounded-full text-zinc-200"
+                          >
+                            #{tag}
+                          </span>
+                        ))}
                       </div>
                       <div className="border-t border-zinc-700 my-2"></div>
                       <p className="text-xs text-zinc-400 line-clamp-2 leading-snug">{model.room_subject}</p>
