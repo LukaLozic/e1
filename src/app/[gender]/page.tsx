@@ -28,5 +28,5 @@ export async function generateMetadata(
 
 // This is a Server Component (default in app router)
 export default function GenderPage({ params }: { params: { gender: string } }) {
-  return <HomePage genderParam={params.gender} />;
+  return <HomePage />;
 }
